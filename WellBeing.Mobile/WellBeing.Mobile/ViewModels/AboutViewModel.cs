@@ -1,11 +1,7 @@
 ﻿using Common.Dto;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WellBeing.Mobile.Services;
@@ -28,32 +24,18 @@ namespace WellBeing.Mobile.ViewModels
             {
                 Shell.Current.GoToAsync("//LoginPage").Wait();
             }
-
-            Steps = Preferences.Get("steps", 0);
-
-
-
-            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            else
             {
-                // Do something
-                Random rdm = new Random();
-                
-                Steps = steps + rdm.Next(3, 9);
-
                 id = Preferences.Get("id", null);
+                Steps = Preferences.Get("steps", 0);
 
-                UserStepsDto userSteps = new UserStepsDto()
-                {
-                    PhoneNumber = id,
-                    steps = Convert.ToString(Steps)
-                };
-
-                Preferences.Set("steps", Steps);
-                clientService.UpdateSteps(userSteps);
-                return true; // True = Repeat again, False = Stop the timer
-            });
+                userSteps.PhoneNumber = id;
+                userSteps.steps = Convert.ToString(Steps);
+            }
 
         }
+
+        private UserStepsDto userSteps = new UserStepsDto();
 
         private string id;
 
@@ -107,6 +89,13 @@ namespace WellBeing.Mobile.ViewModels
             if(currentvectorSum > 0.5 && inStep==true){
                 inStep = false;
                 Steps = steps++;
+
+                id = Preferences.Get("id", null);
+
+                userSteps.PhoneNumber = id;
+                userSteps.steps = Convert.ToString(Steps);
+
+                clientService.UpdateSteps(userSteps);
             }
         }
 
@@ -114,6 +103,12 @@ namespace WellBeing.Mobile.ViewModels
         {
             Steps++;
 
+            id = Preferences.Get("id", null);
+
+            userSteps.PhoneNumber = id;
+            userSteps.steps = Convert.ToString(Steps);
+
+            clientService.UpdateSteps(userSteps);
         }
 
         private int steps;

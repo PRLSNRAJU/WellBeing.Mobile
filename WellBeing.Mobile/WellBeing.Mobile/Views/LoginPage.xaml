@@ -11,7 +11,7 @@
         <viewModels:LoginViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid Padding="10,0,10,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand" RowSpacing="20" ColumnSpacing="10">
+        <Grid Padding="10,0,10,0" VerticalOptions="Center" HorizontalOptions="FillAndExpand" RowSpacing="20" ColumnSpacing="10" BackgroundColor="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
