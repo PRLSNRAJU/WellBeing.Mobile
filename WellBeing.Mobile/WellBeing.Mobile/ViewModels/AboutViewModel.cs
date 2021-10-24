@@ -16,13 +16,21 @@ namespace WellBeing.Mobile.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
+        ApiClientService clientService = new ApiClientService();
+
+
         public AboutViewModel()
         {
             Title = "Steps";
             OpenWebCommand = new Command(async () => await runcmd());
 
+            if (Preferences.Get("id", null) == null)
+            {
+                Shell.Current.GoToAsync("//LoginPage").Wait();
+            }
 
-            //Shell.Current.GoToAsync("//LoginPage").Wait();
+            
+
 
             Device.StartTimer(TimeSpan.FromSeconds(3), () =>
             {
@@ -31,10 +39,21 @@ namespace WellBeing.Mobile.ViewModels
                 
                 Steps = steps + rdm.Next(3, 9);
 
+                id = Preferences.Get("id", null);
+
+                UserStepsDto userSteps = new UserStepsDto()
+                {
+                    PhoneNumber = id,
+                    steps = Convert.ToString(Steps)
+                };
+
+                clientService.UpdateSteps(userSteps);
                 return true; // True = Repeat again, False = Stop the timer
             });
 
         }
+
+        private string id;
 
         public async Task runcmd()
         {
@@ -43,10 +62,8 @@ namespace WellBeing.Mobile.ViewModels
             Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
             Accelerometer.ReadingChanged += Accelerometer_ReadingChanged;
 
-
-            ApiClientService api = new ApiClientService();
-            IList<UserDto> users = await api.GetUsers();
-            IList<UserStepsDto> userSteps = await api.GetAllUserSteps();
+            IList<UserDto> users = await clientService.GetUsers();
+            IList<UserStepsDto> userSteps = await clientService.GetAllUserSteps();
 
             UserStepsDto user1 = userSteps[0];
             UserStepsDto user2 = userSteps[1];

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WellBeing.Mobile.Services;
 using WellBeing.Mobile.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WellBeing.Mobile.ViewModels
@@ -68,6 +69,8 @@ namespace WellBeing.Mobile.ViewModels
 
             ApiClientService api = new ApiClientService();
             await api.AddUser(user);
+
+            Preferences.Set("id", PhoneNumber);
 
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
