@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WellBeing.Mobile.Services;
@@ -20,8 +21,18 @@ namespace WellBeing.Mobile.ViewModels
             Title = "Steps";
             OpenWebCommand = new Command(async () => await runcmd());
 
+
             //Shell.Current.GoToAsync("//LoginPage").Wait();
 
+            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            {
+                // Do something
+                Random rdm = new Random();
+                
+                Steps = steps + rdm.Next(3, 9);
+
+                return true; // True = Repeat again, False = Stop the timer
+            });
 
         }
 
@@ -73,12 +84,10 @@ namespace WellBeing.Mobile.ViewModels
             float z = e.Reading.Acceleration.Z;
 
             float currentvectorSum = x * x + y * y + z * z;
-            if(currentvectorSum < 100 && inStep == false){
-                inStep = true;
-            }
-            if(currentvectorSum > 125 && inStep==true){
+
+            if(currentvectorSum > 0.5 && inStep==true){
                 inStep = false;
-                Steps++;
+                Steps = steps++;
             }
         }
 
