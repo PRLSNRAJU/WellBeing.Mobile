@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WellBeing.Mobile.Views.AboutPage"
+             xmlns:vm="clr-namespace:WellBeing.Mobile.ViewModels"
+             xmlns:viewModels="clr-namespace:WellBeing.Mobile.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <viewModels:AboutViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--<StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
+                    <Image Source="xamarin_logo.png" VerticalOptions="Center" HeightRequest="64" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>-->
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                <Label Text="Steps Taken Today" FontSize="Title" HorizontalOptions="Center"/>
+                <Label Text="{Binding Steps}" FontSize="Title" HorizontalOptions="Center"/>
+                <Label Margin="30"/>
+                <Label Text="Ranks" FontSize="Title" HorizontalOptions="Center"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Rank" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="Name" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Grid.Row="0" Grid.Column="2" Text="Steps" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="1" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank1Name" Grid.Row="1" Grid.Column="1" Text="{Binding NameOne}" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank1Steps" Grid.Row="1" Grid.Column="2" Text="{Binding StepsOne}" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Grid.Row="2" Grid.Column="0" Text="2" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank2Name" Grid.Row="2" Grid.Column="1" Text="{Binding NameTwo}" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank2Steps" Grid.Row="2" Grid.Column="2" Text="{Binding StepsTwo}" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Grid.Row="3" Grid.Column="0" Text="3" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank3Name" Grid.Row="3" Grid.Column="1" Text="{Binding NameThree}" FontSize="Body" HorizontalOptions="Center"/>
+                    <Label x:Name="Rank3Steps" Grid.Row="3" Grid.Column="2" Text="{Binding StepsThree}" FontSize="Body" HorizontalOptions="Center"/>
+                </Grid>
+
+                <StackLayout Orientation="Horizontal" Margin="30" HorizontalOptions="Center">
+                    <Label Text="Your Rank is: " FontSize="Body" HorizontalOptions="Center"/>
+                    <Label Text="{Binding Rank}" FontSize="Body" HorizontalOptions="Center"/>
+                </StackLayout>
+                <Button Text="REFRESH" Command="{Binding OpenWebCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
