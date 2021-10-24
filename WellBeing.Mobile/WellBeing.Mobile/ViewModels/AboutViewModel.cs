@@ -29,7 +29,8 @@ namespace WellBeing.Mobile.ViewModels
                 Shell.Current.GoToAsync("//LoginPage").Wait();
             }
 
-            
+            Steps = Preferences.Get("steps", 0);
+
 
 
             Device.StartTimer(TimeSpan.FromSeconds(3), () =>
@@ -47,6 +48,7 @@ namespace WellBeing.Mobile.ViewModels
                     steps = Convert.ToString(Steps)
                 };
 
+                Preferences.Set("steps", Steps);
                 clientService.UpdateSteps(userSteps);
                 return true; // True = Repeat again, False = Stop the timer
             });
@@ -82,7 +84,7 @@ namespace WellBeing.Mobile.ViewModels
             foreach(UserStepsDto userStep in userSteps)
             {
                 i++;
-                if(userStep.PhoneNumber == "9032541266")
+                if(userStep.PhoneNumber == id)
                 {
                     break;
                 }
